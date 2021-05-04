@@ -12,6 +12,10 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if(savedInstanceState == null)
+        {
+            getSupportFragmentManager().beginTransaction().add(R.id.MainFragment, new LogIn()).commit(); //Устанавливаем в Activity фрагмент в входом
+        }
     }
 
 }
