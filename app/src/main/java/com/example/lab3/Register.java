@@ -46,10 +46,37 @@ public class Register extends Fragment
                 EditText name = (EditText) getView().findViewById(R.id.NameField); //Получаем поле ввода имени
 
                 //Валидация имени. Если оно не подходит под регулярное выражение (Английские и русские буквы, а так же символ -, в количестве от 3 до 16 символов)
-
+                if(!name.getText().toString().matches("^[a-zA-Zа-яёА-ЯЁ-]{3,15}$"))
+                {
+                    AlertTitle.setText("Input correct name"); //Установка текста ошибки
+                }
+                //Валидация электронной почты. Если она не подходит по стандартные параметры, заданные регулярным выражением
+                else if (!email.getText().toString().matches("[^@ \\t\\r\\n]+@[^@ \\t\\r\\n]+\\.[^@ \\t\\r\\n]+"))
+                {
+                    AlertTitle.setText("Input correct email"); //становка текста ошибки
+                }
+                //Валидация пародя.
+                else
+                {
+                    //Если он не подходит под реугялрное выражение (Как минимум одна большая и маленькая английские буквы, цифра и спецсимвол (#?!@$ %^&*-), в количестве не менее 8)
+                    if (!password.getText().toString().matches("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$")) {
+                        AlertTitle.setText("Input correct password"); //Установка текста ошибки
+                    }
+                    else
+                    {
+                        if (password.getText().toString().equals(passwordConfirm.getText().toString())) //Если пароли в поле ввода и поле подтверждения совпадают
+                        {
                             LogIn.mLogin = email.getText().toString(); //Запомниить данные для входа
                             LogIn.mPassword = password.getText().toString();
 
+                            returnToPrevious(); //Выйти на логин
+                        }
+                        else
+                        {
+                            AlertTitle.setText("Password mismatch!"); //Иначе ошибка несовпадения паролей
+                        }
+                    }
+                }
             }
 
         });
